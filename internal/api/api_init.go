@@ -2,6 +2,7 @@ package api
 
 import (
 	"os"
+	db "training_results_receiver/internal/db"
 
 	cfg "github.com/dredfort42/tools/configreader"
 	loger "github.com/dredfort42/tools/logprinter"
@@ -55,16 +56,6 @@ func ApiInit() {
 		panic("auth.path.identify.device is not set")
 	}
 
-	// server.ChangePathEmail = cfg.Config["auth.path.change.email"]
-	// if server.ChangePathEmail == "" {
-	// 	panic("auth.path.change.email is not set")
-	// }
-
-	// server.DeletePathUser = cfg.Config["auth.path.delete.user"]
-	// if server.DeletePathUser == "" {
-	// 	panic("auth.path.delete.user is not set")
-	// }
-
 	if os.Getenv("DEBUG") != "true" && os.Getenv("DEBUG") != "1" {
 		gin.SetMode(gin.ReleaseMode)
 	} else {
@@ -102,4 +93,6 @@ func ApiInit() {
 	url := server.Host + ":" + server.Port
 	loger.Success("Service successfully started", url)
 	router.Run(url)
+
+	db.DB.Database.Close()
 }

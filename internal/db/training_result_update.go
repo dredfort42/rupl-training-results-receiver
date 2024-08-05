@@ -71,7 +71,7 @@ func calculateExtraData(session_uuid string) (err error) {
 				total_distance_m = (SELECT total_distance FROM total_distance)
 			WHERE session_uuid = '` + session_uuid + `';`
 
-	_, err = db.database.Exec(query)
+	_, err = DB.Database.Exec(query)
 
 	return
 }

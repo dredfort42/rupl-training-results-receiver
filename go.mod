@@ -6,6 +6,7 @@ require (
 	github.com/dredfort42/tools v0.1.6
 	github.com/gin-contrib/cors v1.7.2
 	github.com/gin-gonic/gin v1.10.0
+	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
 )
 

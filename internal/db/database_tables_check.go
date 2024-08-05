@@ -115,11 +115,12 @@ func trainingResultsTableCheck() {
 				END IF;
 			END $$;
 
-			CREATE TABLE IF NOT EXISTS ` + db.tableTrainingResults + ` (
-				session_uuid VARCHAR(255) NOT NULL,
+			CREATE TABLE IF NOT EXISTS ` + DB.TableTrainingResults + ` (
+				session_uuid VARCHAR(255) NOT NULL PRIMARY KEY,
 				session_start_time BIGINT DEFAULT 0,
 				session_end_time BIGINT DEFAULT 0,
 				email VARCHAR(255) NOT NULL,
+				device_uuid VARCHAR(255) NOT NULL,
 				route_data route_data[] DEFAULT '{}'::route_data[] NOT NULL,
 				step_count step_count[] DEFAULT '{}'::step_count[] NOT NULL,
 				running_power running_power[] DEFAULT '{}'::running_power[] NOT NULL,
@@ -141,11 +142,10 @@ func trainingResultsTableCheck() {
 				total_steps_count INT NOT NULL DEFAULT 0,
 				total_energy_burned_kcal INT NOT NULL DEFAULT 0,
 				created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-				CONSTRAINT ` + db.tableTrainingResults + `_pkey PRIMARY KEY (session_uuid)
 			);
 		`
 
-	_, err := db.database.Exec(query)
+	_, err := DB.Database.Exec(query)
 	if err != nil {
 		panic(err)
 	}

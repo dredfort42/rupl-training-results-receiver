@@ -41,15 +41,15 @@ func databaseConnect() {
 	url := "host=" + host + " port=" + port + " user=" + user + " password=" + password + " dbname=" + databaseName + " sslmode=" + ssl
 
 	var err error
-	db.database, err = sql.Open("postgres", url)
+	DB.Database, err = sql.Open("postgres", url)
 	if err != nil {
-		db.database.Close()
+		DB.Database.Close()
 		panic("Database connection error | " + err.Error())
 	}
 
-	err = db.database.Ping()
+	err = DB.Database.Ping()
 	if err != nil {
-		db.database.Close()
+		DB.Database.Close()
 		panic("Database ping error | " + err.Error())
 	}
 }
