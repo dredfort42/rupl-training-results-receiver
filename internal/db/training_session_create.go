@@ -2,22 +2,22 @@ package db
 
 import (
 	"errors"
-	s "training_results_receiver/internal/structs"
+	s "training_sessions_receiver/internal/structs"
 )
 
-// TrainingResultCreate creates a new session in the database
-func TrainingResultCreate(session s.DBTrainingResult) (err error) {
-	if TrainingResultExistsCheck(session.SessionStartTime, session.SessionEndTime, session.Email) {
+// TrainingSessionCreate creates a new session in the database
+func TrainingSessionCreate(session s.DBTrainingSession) (err error) {
+	if TrainingSessionExistsCheckByTime(session.SessionStartTime, session.SessionEndTime, session.Email) {
 		return errors.New("session already exists")
 	}
 
 	query := `
-		INSERT INTO ` + DB.TableTrainingResults + ` (
+		INSERT INTO ` + DB.TableTrainingSessions + ` (
 				session_uuid,
 				session_start_time,
 				session_end_time,
 				email,
-				device_uuid,
+				device_name,
 				route_data,
 				step_count,
 				running_power,
@@ -38,7 +38,7 @@ func TrainingResultCreate(session s.DBTrainingResult) (err error) {
 		session.SessionStartTime,
 		session.SessionEndTime,
 		session.Email,
-		session.DeviceUUID,
+		session.DeviceName,
 		session.RouteData,
 		session.StepCount,
 		session.RunningPower,

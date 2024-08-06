@@ -9,17 +9,17 @@ import (
 
 // Database is the database struct
 type Database struct {
-	Database             *sql.DB
-	TableTrainingResults string
+	Database              *sql.DB
+	TableTrainingSessions string
 }
 
 var DB Database
 
 // DatabaseInit initializes the database
 func DatabaseInit() {
-	DB.TableTrainingResults = cfg.Config["db.table.training.results"]
-	if DB.TableTrainingResults == "" {
-		panic("db.table.training.results is empty")
+	DB.TableTrainingSessions = cfg.Config["db.table.training.sessions"]
+	if DB.TableTrainingSessions == "" {
+		panic("db.table.training.sessions is empty")
 	}
 
 	databaseConnect()

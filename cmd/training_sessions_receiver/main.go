@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 	"sort"
-	"training_results_receiver/internal/api"
-	"training_results_receiver/internal/db"
+	"training_sessions_receiver/internal/api"
+	"training_sessions_receiver/internal/db"
 
 	cfg "github.com/dredfort42/tools/configreader"
 	loger "github.com/dredfort42/tools/logprinter"

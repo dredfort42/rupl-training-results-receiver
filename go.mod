@@ -1,4 +1,4 @@
-module training_results_receiver
+module training_sessions_receiver
 
 go 1.22.5
 

@@ -2,7 +2,7 @@ package api
 
 import (
 	"os"
-	db "training_results_receiver/internal/db"
+	db "training_sessions_receiver/internal/db"
 
 	cfg "github.com/dredfort42/tools/configreader"
 	loger "github.com/dredfort42/tools/logprinter"
@@ -25,19 +25,19 @@ var server Server
 
 // ApiInit starts the trainig results receiver service
 func ApiInit() {
-	server.Host = cfg.Config["training.results.receiver.host"]
+	server.Host = cfg.Config["training.sessions.receiver.host"]
 	if server.Host == "" {
-		panic("training.results.receiver.host is not set")
+		panic("training.sessions.receiver.host is not set")
 	}
 
-	server.Port = cfg.Config["training.results.receiver.port"]
+	server.Port = cfg.Config["training.sessions.receiver.port"]
 	if server.Port == "" {
-		panic("training.results.receiver.port is not set")
+		panic("training.sessions.receiver.port is not set")
 	}
 
-	server.CorsStatus = cfg.Config["training.results.receiver.cors"]
+	server.CorsStatus = cfg.Config["training.sessions.receiver.cors"]
 	if server.CorsStatus == "" {
-		loger.Warning("training.results.receiver.cors is not set | CORS is disabled")
+		loger.Warning("training.sessions.receiver.cors is not set | CORS is disabled")
 		server.CorsStatus = "false"
 	}
 
@@ -68,27 +68,11 @@ func ApiInit() {
 		router.Use(cors.Default())
 	}
 
-	// Apply the middleware to the routes you want to protect
 	authorized := router.Group("/", AuthMiddleware())
 	{
-		authorized.POST("/api/v1/training/result", TrainingResultCreate)
-		// authorized.POST("/api/v1/profile/user", UserCreate)
-		// authorized.GET("/api/v1/profile/user", UserGet)
-		// authorized.PATCH("/api/v1/profile/user", UserUpdate)
-		// authorized.DELETE("/api/v1/profile/user", UserDelete)
-		// authorized.POST("/api/v1/profile/user/email", UserChangeEmail)
-		// authorized.POST("/api/v1/profile/devices", DeviceCreate)
-		// authorized.GET("/api/v1/profile/devices", DevicesGet)
-		// authorized.PUT("/api/v1/profile/devices", DeviceUpdate)
-		// authorized.DELETE("/api/v1/profile/devices", DeviceDelete)
-
-		// authorized.POST("/api/v1/training/result", func() {
-		// 	fmt.Ptintln("authorized.POST")
-		// })
+		authorized.POST("/api/v1/training/session", TrainingSessionCreate)
+		authorized.DELETE("/api/v1/training/session", TrainingSessionDelete)
 	}
-
-	// // Unprotected route
-	// router.GET("/unprotected", UnprotectedEndpoint)
 
 	url := server.Host + ":" + server.Port
 	loger.Success("Service successfully started", url)

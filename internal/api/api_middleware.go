@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	s "training_results_receiver/internal/structs"
+	s "training_sessions_receiver/internal/structs"
 
 	loger "github.com/dredfort42/tools/logprinter"
 	"github.com/gin-gonic/gin"

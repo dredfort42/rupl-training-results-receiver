@@ -1,7 +1,7 @@
 package db
 
-// trainingResultsTableCheck checks if the training results table exists, if not, it creates it
-func trainingResultsTableCheck() {
+// trainingSessionsTableCheck checks if the training results table exists, if not, it creates it
+func trainingSessionsTableCheck() {
 	query := `
 			DO $$
 			BEGIN
@@ -115,33 +115,33 @@ func trainingResultsTableCheck() {
 				END IF;
 			END $$;
 
-			CREATE TABLE IF NOT EXISTS ` + DB.TableTrainingResults + ` (
+			CREATE TABLE IF NOT EXISTS ` + DB.TableTrainingSessions + ` (
 				session_uuid VARCHAR(255) NOT NULL PRIMARY KEY,
-				session_start_time BIGINT DEFAULT 0,
-				session_end_time BIGINT DEFAULT 0,
+				session_start_time BIGINT NOT NULL,
+				session_end_time BIGINT NOT NULL,
 				email VARCHAR(255) NOT NULL,
-				device_uuid VARCHAR(255) NOT NULL,
-				route_data route_data[] DEFAULT '{}'::route_data[] NOT NULL,
-				step_count step_count[] DEFAULT '{}'::step_count[] NOT NULL,
-				running_power running_power[] DEFAULT '{}'::running_power[] NOT NULL,
-				vertical_oscillation vertical_oscillation[] DEFAULT '{}'::vertical_oscillation[] NOT NULL,
-				energy_burned energy_burned[] DEFAULT '{}'::energy_burned[] NOT NULL,
-				heart_rate heart_rate[] DEFAULT '{}'::heart_rate[] NOT NULL,
-				stride_length stride_length[] DEFAULT '{}'::stride_length[] NOT NULL,
-				ground_contact_time ground_contact_time[] DEFAULT '{}'::ground_contact_time[] NOT NULL,
-				speed speed[] DEFAULT '{}'::speed[] NOT NULL,
-				distance distance[] DEFAULT '{}'::distance[] NOT NULL,
-				vo2max_mL_per_min_per_kg FLOAT NOT NULL DEFAULT 0,
-				avr_speed_m_per_s FLOAT NOT NULL DEFAULT 0,
-				avr_heart_rate_count_per_s FLOAT NOT NULL DEFAULT 0,
-				avr_power_w FLOAT NOT NULL DEFAULT 0,
-				avr_vertical_oscillation_cm FLOAT NOT NULL DEFAULT 0,
-				avr_ground_contact_time_ms FLOAT NOT NULL DEFAULT 0,
-				avr_stride_length_m FLOAT NOT NULL DEFAULT 0,
-				total_distance_m FLOAT NOT NULL DEFAULT 0,
-				total_steps_count INT NOT NULL DEFAULT 0,
-				total_energy_burned_kcal INT NOT NULL DEFAULT 0,
-				created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+				device_name VARCHAR(255) DEFAULT 'unknown',
+				route_data route_data[] DEFAULT '{}'::route_data[] ,
+				step_count step_count[] DEFAULT '{}'::step_count[] ,
+				running_power running_power[] DEFAULT '{}'::running_power[] ,
+				vertical_oscillation vertical_oscillation[] DEFAULT '{}'::vertical_oscillation[] ,
+				energy_burned energy_burned[] DEFAULT '{}'::energy_burned[] ,
+				heart_rate heart_rate[] DEFAULT '{}'::heart_rate[] ,
+				stride_length stride_length[] DEFAULT '{}'::stride_length[] ,
+				ground_contact_time ground_contact_time[] DEFAULT '{}'::ground_contact_time[] ,
+				speed speed[] DEFAULT '{}'::speed[] ,
+				distance distance[] DEFAULT '{}'::distance[] ,
+				vo2max_mL_per_min_per_kg FLOAT ,
+				avr_speed_m_per_s FLOAT ,
+				avr_heart_rate_count_per_s FLOAT ,
+				avr_power_w FLOAT ,
+				avr_vertical_oscillation_cm FLOAT ,
+				avr_ground_contact_time_ms FLOAT ,
+				avr_stride_length_m FLOAT ,
+				total_distance_m FLOAT ,
+				total_steps_count INT ,
+				total_energy_burned_kcal INT ,
+				created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 			);
 		`
 
@@ -153,5 +153,5 @@ func trainingResultsTableCheck() {
 
 // CheckTables checks if the tables exists, if not, it creates it
 func tablesCheck() {
-	trainingResultsTableCheck()
+	trainingSessionsTableCheck()
 }

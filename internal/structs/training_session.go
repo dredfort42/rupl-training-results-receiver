@@ -4,16 +4,16 @@ import (
 	"github.com/lib/pq"
 )
 
-// LastTrainingResult is a struct for JSON
-type LastTrainingResult struct {
+// SessionGeneralData is a struct for JSON
+type SessionGeneralData struct {
 	Email      string `json:"email"`
-	DeviceUUID string `json:"device_uuid"`
+	DeviceName string `json:"device_name"`
 	StartTime  int64  `json:"session_start_time"`
 	EndTime    int64  `json:"session_end_time"`
 }
 
-// RouteData is a struct for JSON and database
-type RouteData struct {
+// SessionRouteData is a struct for JSON and database
+type SessionRouteData struct {
 	Timestamp          int64   `json:"timestamp"`
 	Latitude           float64 `json:"latitude"`
 	Longitude          float64 `json:"longitude"`
@@ -26,47 +26,47 @@ type RouteData struct {
 	CourseAccuracy     float64 `json:"course_accuracy"`
 }
 
-// JSONLastResultTypeData is a struct for JSON
-type JSONLastResultTypeData struct {
+// SessionQuantityData is a struct for JSON
+type SessionQuantityData struct {
 	Timestamp int64  `json:"timestamp"`
 	Quantity  string `json:"quantity"`
 }
 
-// JSONLastTrainingResult is a struct for JSON
-type JSONLastTrainingResult struct {
-	Session             LastTrainingResult       `json:"session"`
-	RouteData           []RouteData              `json:"route_data"`
-	StepCount           []JSONLastResultTypeData `json:"step_count"`
-	RunningPower        []JSONLastResultTypeData `json:"running_power"`
-	VerticalOscillation []JSONLastResultTypeData `json:"vertical_oscillation"`
-	EnergyBurned        []JSONLastResultTypeData `json:"energy_burned"`
-	HeartRate           []JSONLastResultTypeData `json:"heart_rate"`
-	StrideLength        []JSONLastResultTypeData `json:"stride_length"`
-	GroundContactTime   []JSONLastResultTypeData `json:"ground_contact_time"`
-	Speed               []JSONLastResultTypeData `json:"speed"`
-	Distance            []JSONLastResultTypeData `json:"distance"`
-	VO2Max              []JSONLastResultTypeData `json:"vo2_max"`
+// TrainingSession is a struct for JSON
+type TrainingSession struct {
+	Session             SessionGeneralData    `json:"session"`
+	RouteData           []SessionRouteData    `json:"route_data"`
+	StepCount           []SessionQuantityData `json:"step_count"`
+	RunningPower        []SessionQuantityData `json:"running_power"`
+	VerticalOscillation []SessionQuantityData `json:"vertical_oscillation"`
+	EnergyBurned        []SessionQuantityData `json:"energy_burned"`
+	HeartRate           []SessionQuantityData `json:"heart_rate"`
+	StrideLength        []SessionQuantityData `json:"stride_length"`
+	GroundContactTime   []SessionQuantityData `json:"ground_contact_time"`
+	Speed               []SessionQuantityData `json:"speed"`
+	Distance            []SessionQuantityData `json:"distance"`
+	VO2Max              []SessionQuantityData `json:"vo2_max"`
 }
 
-// DBResultDataInt is a struct for database
-type DBResultDataInt struct {
+// DBSessionDataInt is a struct for database
+type DBSessionDataInt struct {
 	Timestamp int64
 	Data      int
 }
 
-// DBResultDataFloat32 is a struct for database
-type DBResultDataFloat32 struct {
+// DBSessionDataFloat32 is a struct for database
+type DBSessionDataFloat32 struct {
 	Timestamp int64
 	Data      float32
 }
 
-// DBTrainingResult represents a session entry in the database
-type DBTrainingResult struct {
+// DBTrainingSession represents a session entry in the database
+type DBTrainingSession struct {
 	SessionUUID              string
 	SessionStartTime         int64
 	SessionEndTime           int64
 	Email                    string
-	DeviceUUID               string
+	DeviceName               string
 	RouteData                pq.StringArray
 	StepCount                pq.StringArray
 	RunningPower             pq.StringArray

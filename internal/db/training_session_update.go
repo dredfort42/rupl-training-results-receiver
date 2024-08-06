@@ -5,60 +5,60 @@ func calculateExtraData(session_uuid string) (err error) {
 	query := `
 			WITH
 				avg_speed AS (
-					SELECT COALESCE(AVG(t.speed_m_per_s), 0) AS average_speed
-					FROM sessions,
+					SELECT COALESCE(AVG(t.speed_m_per_s), NULL) AS average_speed
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(speed) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				total_steps AS (
-					SELECT COALESCE(SUM(t.steps_count), 0) AS total_steps
-					FROM sessions,
+					SELECT COALESCE(SUM(t.steps_count), NULL) AS total_steps
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(step_count) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				avg_running_power AS (
-					SELECT COALESCE(AVG(t.power_w), 0) AS average_running_power
-					FROM sessions,
+					SELECT COALESCE(AVG(t.power_w), NULL) AS average_running_power
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(running_power) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				avg_vertical_oscillation AS (
-					SELECT COALESCE(AVG(t.vertical_oscillation_cm), 0) AS average_vertical_oscillation
-					FROM sessions,
+					SELECT COALESCE(AVG(t.vertical_oscillation_cm), NULL) AS average_vertical_oscillation
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(vertical_oscillation) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				total_energy_burned AS (
-					SELECT COALESCE(SUM(t.energy_burned_kcal), 0) AS total_energy_burned
-					FROM sessions,
+					SELECT COALESCE(SUM(t.energy_burned_kcal), NULL) AS total_energy_burned
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(energy_burned) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				avg_heart_rate AS (
-					SELECT COALESCE(AVG(t.heart_rate_count_per_s), 0) AS average_heart_rate
-					FROM sessions,
+					SELECT COALESCE(AVG(t.heart_rate_count_per_s), NULL) AS average_heart_rate
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(heart_rate) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				avg_stride_length AS (
-					SELECT COALESCE(AVG(t.stride_length_m), 0) AS average_stride_length
-					FROM sessions,
+					SELECT COALESCE(AVG(t.stride_length_m), NULL) AS average_stride_length
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(stride_length) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				avg_ground_contact_time AS (
-					SELECT COALESCE(AVG(t.ground_contact_time_ms), 0) AS average_ground_contact_time
-					FROM sessions,
+					SELECT COALESCE(AVG(t.ground_contact_time_ms), NULL) AS average_ground_contact_time
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(ground_contact_time) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				),
 				total_distance AS (
-					SELECT COALESCE(SUM(t.distance_m), 0) AS total_distance
-					FROM sessions,
+					SELECT COALESCE(SUM(t.distance_m), NULL) AS total_distance
+					FROM ` + DB.TableTrainingSessions + `,
 						UNNEST(distance) AS t
 					WHERE session_uuid = '` + session_uuid + `'
 				)
-			UPDATE sessions
+			UPDATE ` + DB.TableTrainingSessions + `
 			SET
 				avr_speed_m_per_s = (SELECT average_speed FROM avg_speed),
 				total_steps_count = (SELECT total_steps FROM total_steps),
