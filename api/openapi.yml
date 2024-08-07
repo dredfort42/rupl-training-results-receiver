@@ -94,6 +94,19 @@ paths:
                   value:
                     error: "invalid_request"
                     error_description: "Error parsing session data | ..."
+        "401":
+          description: |
+            Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                invalidToken:
+                  summary: Invalid token
+                  value:
+                    error: "access_denied"
+                    error_description: "Unauthorized"
         "500":
           description: |
             Internal Server Error
@@ -163,6 +176,19 @@ paths:
                   value:
                     error: "invalid_request"
                     error_description: "Missing session_uuid"
+        "401":
+          description: |
+            Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                invalidToken:
+                  summary: Invalid token
+                  value:
+                    error: "access_denied"
+                    error_description: "Unauthorized"
         "404":
           description: |
             Not Found
